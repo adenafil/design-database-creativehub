@@ -16,6 +16,13 @@ CREATE TABLE `images` (
   `location` VARCHAR(255)
 );
 
+-- create assset product
+create table `product_asset` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,	
+  `location` varchar(255) -- need to be secured
+ );
+
+
 -- User details table
 CREATE TABLE `user_details` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,12 +47,25 @@ CREATE TABLE `user_roles` (
 );
 
 -- Payment account table
-CREATE TABLE `payment_account` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT,
-  `bank_name` VARCHAR(255),
-  `bank_number` INT UNIQUE,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+-- CREATE TABLE `payment_account` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,
+--   `user_id` INT,
+--   `bank_name` VARCHAR(255),
+--   `bank_number` INT UNIQUE,
+--   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+-- );
+
+
+-- Table Payment
+create table `payment` (
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`bank_name` varchar(100),
+	`account_name` varchar(100),
+	`account_number` varchar(50),
+	`image_id` INT,
+	`user_id` INT,
+	foreign key (`image_id`) references `images` (`id`),
+	foreign key (`user_id`) references `users` (`id`)
 );
 
 -- Categories table
@@ -61,10 +81,12 @@ CREATE TABLE `products` (
   `image_id` INT,
   `seller_id` INT,
   `description` VARCHAR(255),
+  `asset_id` INT,
   `price` INT,
   `category_id` INT,
   FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
   FOREIGN KEY (`seller_id`) REFERENCES `users` (`id`),
+  FOREIGN KEY (`asset_id`) REFERENCES `product_asset` (`id`),
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 );
 
@@ -75,9 +97,11 @@ CREATE TABLE `reviews` (
   `comment` TEXT,
   `user_id` INT,
   `product_id` INT,
-  `created_at` TIMESTAMP,
+  `created_at` TIMESTAMP default CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  constraint `unique_user_reviews` UNIQUE(`user_id`, `product_id`)
 );
 
 -- Charts table
@@ -93,7 +117,8 @@ CREATE TABLE `chart_products` (
   `chart_id` INT,
   `product_id` INT,
   FOREIGN KEY (`chart_id`) REFERENCES `charts` (`id`),
-  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  constraint `unique_chart_products` UNIQUE(`chart_id`, `product_id`)
 );
 
 -- Wishlist table
@@ -109,7 +134,8 @@ CREATE TABLE `wishlist_products` (
   `wishlist_id` INT,
   `product_id` INT,
   FOREIGN KEY (`wishlist_id`) REFERENCES `wishlist` (`id`),
-  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  constraint `unique_wishlist_products` UNIQUE(`wishlist_id`, `product_id`)
 );
 
 -- Transaction table
@@ -117,8 +143,18 @@ CREATE TABLE `transactions` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `product_id` INT,
   `user_id` INT,
-  `total` INT,
+  `status` varchar(255),
+--   `total` INT,
   `created_at` TIMESTAMP,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );
+
+-- list purchases item of buyer
+-- create table `purchases` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,	
+--   `transaction_id` INT,
+--   `review_id` INT,
+--   foreign key (`transaction_id`) references `transactions` (`id`),
+--   foreign key (`review_id`) references `reviews` (`id`)
+-- );
