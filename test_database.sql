@@ -96,6 +96,16 @@ values(1, 3),(1,2); -- PR : (DONE)harusnya tidak bisa whistlist dengan product y
 -- now hasan is buying products
 insert into transactions (product_id, user_id) values(2, 1);
 
+-- Hasan is uploading his payment reciept
+insert into images (location)
+values
+('www.buktipembayaran.com/bri.png');
+
+-- Hasan is gonna pay the transaction
+insert into payment (bank_name, account_name, account_number, image_id, transaction_id, status)
+values
+('BRI', 'hasan', '3012210002', 7, 1, 'DONE');
+
 -- after buying , hasan is happy and going to give a reviews to ali
 insert into reviews (star, comment, user_id, product_id)
 values(5, 'Ya Maula Ya Ali, ane suka product ente', 1, 2); // PR : One transaction harus bisa komen satu kali

@@ -43,7 +43,8 @@ CREATE TABLE `user_roles` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `role` VARCHAR(255),
   `user_id` INT,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  constraint `user_roles_unique` UNIQUE(`role`, `user_id`)
 );
 
 -- Payment account table
@@ -56,22 +57,10 @@ CREATE TABLE `user_roles` (
 -- );
 
 
--- Table Payment
-create table `payment` (
-	`id` INT PRIMARY KEY AUTO_INCREMENT,
-	`bank_name` varchar(100),
-	`account_name` varchar(100),
-	`account_number` varchar(50),
-	`image_id` INT,
-	`user_id` INT,
-	foreign key (`image_id`) references `images` (`id`),
-	foreign key (`user_id`) references `users` (`id`)
-);
-
 -- Categories table
 CREATE TABLE `categories` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `name` VARCHAR(255)
+  `name` VARCHAR(255) unique
 );
 
 -- Products table
@@ -143,12 +132,28 @@ CREATE TABLE `transactions` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `product_id` INT,
   `user_id` INT,
-  `status` varchar(255),
 --   `total` INT,
   `created_at` TIMESTAMP,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );
+
+-- Table Payment
+create table `payment` (
+	`id` INT AUTO_INCREMENT PRIMARY KEY,
+	`bank_name` varchar(100),
+	`account_name` varchar(100),
+	`account_number` varchar(50),
+	`image_id` INT,
+	`transaction_id` INT,
+	`status` varchar(50),
+	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	foreign key (`image_id`) references `images` (`id`),
+	foreign key (`transaction_id`) references `transactions` (`id`)
+);
+
+
 
 -- list purchases item of buyer
 -- create table `purchases` (
