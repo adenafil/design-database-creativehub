@@ -11,7 +11,8 @@ values
 -- create user roles for 3 users
 insert into user_roles (role, user_id)
 values
-('seller', 1),
+('seller', 3),
+('buyer', 1),
 ('buyer', 2),
 ('buyer', 3);
 
@@ -94,21 +95,29 @@ insert into wishlist_products (wishlist_id, product_id)
 values(1, 3),(1,2); -- PR : (DONE)harusnya tidak bisa whistlist dengan product yang sama berturut2
 
 -- now hasan is buying products
-insert into transactions (product_id, user_id) values(2, 1);
+insert into transactions (product_id, user_id) values(2, 1), (3,1);
 
 -- Hasan is uploading his payment reciept
 insert into images (location)
 values
-('www.buktipembayaran.com/bri.png');
+('www.buktipembayaran.com/bri.png'),
+('www.buktipembayaran.com/bri.png')
+;
 
 -- Hasan is gonna pay the transaction
 insert into payment (bank_name, account_name, account_number, image_id, transaction_id, status)
 values
-('BRI', 'hasan', '3012210002', 7, 1, 'DONE');
+('BRI', 'hasan', '3012210002', 7, 1, 'DONE'),
+('BRI', 'hasan', '3012210002', 8, 2, 'DONE');
+;
 
 -- after buying , hasan is happy and going to give a reviews to ali
 insert into reviews (star, comment, user_id, product_id)
-values(5, 'Ya Maula Ya Ali, ane suka product ente', 1, 2); // PR : One transaction harus bisa komen satu kali
+values(5, 'Ya Maula Ya Ali, ane suka product ente', 1, 2),
+(5, 'Mantap sejarahnya lengkap, merangkum berbagai macam kitab dan
+tidak fokus ke 1 sumber', 1, 3
+)
+; -- PR : One transaction harus bisa komen satu kali
 
 
 
