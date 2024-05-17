@@ -9,12 +9,12 @@ values
 (3,'ali@gmail.com', '12345678', 'ali');
 
 -- create user roles for 3 users
-insert into user_roles (role, user_id)
-values
-('seller', 3),
-('buyer', 1),
-('buyer', 2),
-('buyer', 3);
+-- insert into user_roles (role, user_id)
+-- values
+-- ('seller', 3),
+-- ('buyer', 1),
+-- ('buyer', 2),
+-- ('buyer', 3);
 
 -- Upload image
 insert into images (location)
@@ -88,10 +88,10 @@ set asset_id = 4
 where id = 4;
 
 -- assume that hasan or husain is gonna whislist items
-insert into wishlist  (user_id) values(1);
+insert into charts  (user_id) values(1);
 
 -- okay rn, hasan is choosing the product in whislist
-insert into wishlist_products (wishlist_id, product_id)
+insert into chart_products  (chart_id , product_id)
 values(1, 3),(1,2); -- PR : (DONE)harusnya tidak bisa whistlist dengan product yang sama berturut2
 
 -- now hasan is buying products
@@ -104,11 +104,16 @@ values
 ('www.buktipembayaran.com/bri.png')
 ;
 
+-- Create method payment
+insert into payment_method(name) values
+('DANA'),
+('BRI');
+
 -- Hasan is gonna pay the transaction
-insert into payment (bank_name, account_name, account_number, image_id, transaction_id, status)
+insert into payment (payment_method_id , name, `number` , image_id, transaction_id, status)
 values
-('BRI', 'hasan', '3012210002', 7, 1, 'DONE'),
-('BRI', 'hasan', '3012210002', 8, 2, 'DONE');
+(1, 'hasan', '3012210002', 7, 1, 'DONE'),
+(2, 'hasan', '3012210002', 8, 2, 'DONE');
 ;
 
 -- after buying , hasan is happy and going to give a reviews to ali

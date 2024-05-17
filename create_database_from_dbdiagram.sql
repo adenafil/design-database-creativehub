@@ -39,13 +39,13 @@ CREATE TABLE `user_details` (
 );
 
 -- User roles table
-CREATE TABLE `user_roles` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `role` VARCHAR(255),
-  `user_id` INT,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  constraint `user_roles_unique` UNIQUE(`role`, `user_id`)
-);
+-- CREATE TABLE `user_roles` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,
+--   `role` VARCHAR(255),
+--   `user_id` INT,
+--   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+--   constraint `user_roles_unique` UNIQUE(`role`, `user_id`)
+-- );
 
 -- Payment account table
 -- CREATE TABLE `payment_account` (
@@ -111,21 +111,21 @@ CREATE TABLE `chart_products` (
 );
 
 -- Wishlist table
-CREATE TABLE `wishlist` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-);
+-- CREATE TABLE `wishlist` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,
+--   `user_id` INT,
+--   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+-- );
 
 -- Wishlist products junction table
-CREATE TABLE `wishlist_products` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `wishlist_id` INT,
-  `product_id` INT,
-  FOREIGN KEY (`wishlist_id`) REFERENCES `wishlist` (`id`),
-  FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  constraint `unique_wishlist_products` UNIQUE(`wishlist_id`, `product_id`)
-);
+-- CREATE TABLE `wishlist_products` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,
+--   `wishlist_id` INT,
+--   `product_id` INT,
+--   FOREIGN KEY (`wishlist_id`) REFERENCES `wishlist` (`id`),
+--   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+--   constraint `unique_wishlist_products` UNIQUE(`wishlist_id`, `product_id`)
+-- );
 
 -- Transaction table
 CREATE TABLE `transactions` (
@@ -138,17 +138,24 @@ CREATE TABLE `transactions` (
   FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 );
 
+-- Table Payment Method
+create table `payment_method` (
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`name` varchar(100)
+);
+
 -- Table Payment
 create table `payment` (
 	`id` INT AUTO_INCREMENT PRIMARY KEY,
-	`bank_name` varchar(100),
-	`account_name` varchar(100),
-	`account_number` varchar(50),
+	`payment_method_id` INT,
+	`name` varchar(100),
+	`number` varchar(50),
 	`image_id` INT,
 	`transaction_id` INT,
 	`status` varchar(50),
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    foreign key (`payment_method_id`) references `payment_method` (`id`),
 	foreign key (`image_id`) references `images` (`id`),
 	foreign key (`transaction_id`) references `transactions` (`id`)
 );
