@@ -4,15 +4,24 @@ CREATE DATABASE creativehub;
 USE creativehub;
 
 -- Users table
-CREATE TABLE `users` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `username` VARCHAR(255) UNIQUE,
-  `created_at` TIMESTAMP
-);
+CREATE TABLE `user` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_username_unique` (`username`),
+  UNIQUE KEY `user_email_unique` (`email`)
+ );
 
 -- Images table
 CREATE TABLE `images` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `id` INT unsigned PRIMARY KEY AUTO_INCREMENT,
   `location` VARCHAR(255)
 );
 
@@ -25,18 +34,19 @@ create table `product_asset` (
 
 -- User details table
 CREATE TABLE `user_details` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT,
-  `email` VARCHAR(255) UNIQUE,
-  `password` VARCHAR(255),
-  `name` VARCHAR(255),
-  `bio` TEXT,
-  `title` VARCHAR(255),
-  `image_id` INT,
-  `updated_at` TIMESTAMP,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  FOREIGN KEY (`image_id`) REFERENCES `images` (`id`)
-);
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` INT unsigned NOT NULL,
+  `bio` text DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image_id` INT unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_details_user_id_unique` (`user_id`),
+  KEY `user_details_image_id_foreign` (`image_id`),
+  CONSTRAINT `user_details_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
+  CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+ );
 
 -- User roles table
 -- CREATE TABLE `user_roles` (
@@ -67,14 +77,14 @@ CREATE TABLE `categories` (
 CREATE TABLE `products` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `title` VARCHAR(255),
-  `image_id` INT,
-  `seller_id` INT,
+  `image_id` INT unsigned,
+  `seller_id` INT unsigned,
   `description` VARCHAR(255),
   `asset_id` INT,
   `price` INT,
   `category_id` INT,
   FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
-  FOREIGN KEY (`seller_id`) REFERENCES `users` (`id`),
+  FOREIGN KEY (`seller_id`) REFERENCES `user` (`id`),
   FOREIGN KEY (`asset_id`) REFERENCES `product_asset` (`id`),
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 );
@@ -84,11 +94,11 @@ CREATE TABLE `reviews` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `star` INT,
   `comment` TEXT,
-  `user_id` INT,
+  `user_id` INT unsigned,
   `product_id` INT,
   `created_at` TIMESTAMP default CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   constraint `unique_user_reviews` UNIQUE(`user_id`, `product_id`)
 );
@@ -96,8 +106,8 @@ CREATE TABLE `reviews` (
 -- Charts table
 CREATE TABLE `charts` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `user_id` INT,
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  `user_id` INT unsigned,
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 
 -- Chart products junction table
@@ -131,11 +141,11 @@ CREATE TABLE `chart_products` (
 CREATE TABLE `transactions` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `product_id` INT,
-  `user_id` INT,
+  `user_id` INT unsigned,
 --   `total` INT,
   `created_at` TIMESTAMP,
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 
 -- Table Payment Method
@@ -150,7 +160,7 @@ create table `payment` (
 	`payment_method_id` INT,
 	`name` varchar(100),
 	`number` varchar(50),
-	`image_id` INT,
+	`image_id` INT unsigned,
 	`transaction_id` INT,
 	`status` varchar(50),
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
