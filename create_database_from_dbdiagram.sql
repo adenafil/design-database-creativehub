@@ -12,8 +12,8 @@ CREATE TABLE `user` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username_unique` (`username`),
   UNIQUE KEY `user_email_unique` (`email`)
@@ -39,8 +39,8 @@ CREATE TABLE `user_details` (
   `bio` text DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `location` text,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_details_user_id_unique` (`user_id`),
   CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -74,11 +74,11 @@ CREATE TABLE `categories` (
 -- Products table
 CREATE TABLE `products` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255),
   `image_product_url` text,
-  `image_id` INT unsigned,
   `seller_id` INT unsigned,
-  `description` VARCHAR(255),
-  `asset_product_url` text,
+  `description` text,
+  `asset_product_url` text null,
   `price` INT,
   `category_id` INT,
   FOREIGN KEY (`seller_id`) REFERENCES `user` (`id`),

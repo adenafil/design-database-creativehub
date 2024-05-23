@@ -130,6 +130,6 @@ group by p.id
 
 
 select * from `user` u ;
-
-
+select * from products p ;
+select * from user_details ud ;
 

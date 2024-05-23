@@ -1,13 +1,13 @@
 <?php
 
 // import GetConnection
-require_once 'GetConnection.php';
+require_once __DIR__ . '../../../connection/GetConnection.php';
 
 // Buat object PDO
 $connection = getConnection();
 
 // ambil data json
-$json = file_get_contents(__DIR__ . "/data/icon.json");
+$json = file_get_contents(__DIR__ . "../../../data/icon.json");
 // di decode dan juga menggunakna associative array
 $data = json_decode($json, true);
 
