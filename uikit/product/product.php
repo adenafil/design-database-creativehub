@@ -52,7 +52,7 @@ for ($i = 0; $i < count($data); $i++) {
     $title = $data[$i]['title'];
     $image_product = $data[$i]['src'];
     $seller_id = getIdByName($data[$i]['penjual']);
-    var_dump($seller_id);
+    // var_dump($seller_id);
     $desc = $data[$i]['sellerText'];
     $asset_product_url = $data[$i]['linkSellerHref'];
     $price = $data[$i]['price'];

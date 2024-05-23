@@ -48,9 +48,7 @@ $sql = "insert into user(name, username, email, password) values(?, ?, ?, ?)";
 
 // looping dari banyaknya data
 for ($i = 0; $i < count($data); $i++) {
-    // var_dump($data[$i]['penjual']);
     if (!is_username_already_exist($data[$i]['penjual']) ) {
-        // var_dump($data[$i]['penjual']);
     // ambil nama penjual, jadikanlah usernam yah
     $username = str_replace(' ', '', $data[$i]['penjual']);
     // ambil nama buat emial

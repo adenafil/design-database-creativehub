@@ -2,6 +2,8 @@
 
 // import GetConnection
 require_once __DIR__ . '../../../connection/GetConnection.php';
+require_once __DIR__ . '../../../helper/cek_username.php';
+
 
 // Buat object PDO
 $connection = getConnection();
@@ -45,19 +47,22 @@ $sql = "insert into user(name, username, email, password) values(?, ?, ?, ?)";
 
 // looping dari banyaknya data
 for ($i = 0; $i < count($data); $i++) {
-    // ambil nama penjual, jadikanlah usernam yah
-    $username = str_replace(' ', '', $data[$i]['penjual']);
-    // ambil nama buat emial
-    $email = $username . "@gmail.com";
-
-    // siapkan preparedStatement
-    $preparedStatement = $connection->prepare($sql);
-    // kemudian execute
-    $preparedStatement->execute([
-        $data[$i]['penjual'],
-        $username,
-        $email,
-        $username,
-    ]);
+    if (!is_username_already_exist($data[$i]['penjual']) ) {
+        // ambil nama penjual, jadikanlah usernam yah
+        $username = str_replace(' ', '', $data[$i]['penjual']);
+        // ambil nama buat emial
+        $email = $username . "@gmail.com";
+    
+        // siapkan preparedStatement
+        $preparedStatement = $connection->prepare($sql);
+        // kemudian execute
+        $preparedStatement->execute([
+            $data[$i]['penjual'],
+            $username,
+            $email,
+            $username,
+        ]);
+    
+    }
 }
 

@@ -2,6 +2,7 @@
 
 // import GetConnection
 require_once __DIR__ . '../../../connection/GetConnection.php';
+require_once __DIR__ . '../../../helper/cek_username.php';
 
 // Buat object PDO
 $connection = getConnection();
@@ -81,19 +82,22 @@ $sql = "insert into user_details(user_id, bio, title, location) values(?, ?, ?, 
 
 // looping dari banyaknya data
 for ($i = 0; $i < count($data); $i++) {
-    $user_id = getIdByName($data[$i]['penjual']);
-    $bio = "Hello i'm " . $data[$i]['penjual'] . " and i'm an ui ux enginner.";
-    $title = 'ui ux';
-    $loaction = $data[$i]['ppSeller'];
+    if (!is_id_exist_in_user_details(getIdByName($data[$i]['penjual']))) {
 
-    // siapkan preparedStatement
-    $preparedStatement = $connection->prepare($sql);
-    // kemudian execute
-    $preparedStatement->execute([
-        $user_id,
-        $bio,
-        $title,
-        $loaction,
-    ]);
+        $user_id = getIdByName($data[$i]['penjual']);
+        $bio = "Hello i'm " . $data[$i]['penjual'] . " and i'm an ui ux enginner.";
+        $title = 'ui ux';
+        $loaction = $data[$i]['ppSeller'];
+    
+        // siapkan preparedStatement
+        $preparedStatement = $connection->prepare($sql);
+        // kemudian execute
+        $preparedStatement->execute([
+            $user_id,
+            $bio,
+            $title,
+            $loaction,
+        ]);    
+    }
 }
 

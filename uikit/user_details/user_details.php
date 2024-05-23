@@ -84,7 +84,6 @@ $sql = "insert into user_details(user_id, bio, title, location) values(?, ?, ?, 
 for ($i = 0; $i < count($data); $i++) {
 
     if (!is_id_exist_in_user_details(getIdByName($data[$i]['penjual']))) {
-        var_dump($data[$i]['penjual']);
 
         $user_id = getIdByName($data[$i]['penjual']);
         $bio = "Hello i'm " . $data[$i]['penjual'] . " and i'm an ui ux enginner.";
