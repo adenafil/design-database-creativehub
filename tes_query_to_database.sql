@@ -129,7 +129,7 @@ group by p.id
 
 
 
-
+select * from `user` u ;
 
 
 

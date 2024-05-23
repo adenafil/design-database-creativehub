@@ -20,16 +20,16 @@ CREATE TABLE `user` (
  );
 
 -- Images table
-CREATE TABLE `images` (
-  `id` INT unsigned PRIMARY KEY AUTO_INCREMENT,
-  `location` VARCHAR(255)
-);
+-- CREATE TABLE `images` (
+--   `id` INT unsigned PRIMARY KEY AUTO_INCREMENT,
+--   `location` VARCHAR(255)
+-- );
 
 -- create assset product
-create table `product_asset` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,	
-  `location` varchar(255) -- need to be secured
- );
+-- create table `product_asset` (
+--   `id` INT PRIMARY KEY AUTO_INCREMENT,	
+--   `location` varchar(255) -- need to be secured
+--  );
 
 
 -- User details table
@@ -38,13 +38,11 @@ CREATE TABLE `user_details` (
   `user_id` INT unsigned NOT NULL,
   `bio` text DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `image_id` INT unsigned NOT NULL,
+  `location` text,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_details_user_id_unique` (`user_id`),
-  KEY `user_details_image_id_foreign` (`image_id`),
-  CONSTRAINT `user_details_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
   CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
  );
 
@@ -76,16 +74,14 @@ CREATE TABLE `categories` (
 -- Products table
 CREATE TABLE `products` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `title` VARCHAR(255),
+  `image_product_url` text,
   `image_id` INT unsigned,
   `seller_id` INT unsigned,
   `description` VARCHAR(255),
-  `asset_id` INT,
+  `asset_product_url` text,
   `price` INT,
   `category_id` INT,
-  FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),
   FOREIGN KEY (`seller_id`) REFERENCES `user` (`id`),
-  FOREIGN KEY (`asset_id`) REFERENCES `product_asset` (`id`),
   FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 );
 
@@ -104,20 +100,20 @@ CREATE TABLE `reviews` (
 );
 
 -- Charts table
-CREATE TABLE `charts` (
+CREATE TABLE `carts` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `user_id` INT unsigned,
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 
 -- Chart products junction table
-CREATE TABLE `chart_products` (
+CREATE TABLE `cart_products` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `chart_id` INT,
+  `cart_id` INT,
   `product_id` INT,
-  FOREIGN KEY (`chart_id`) REFERENCES `charts` (`id`),
+  FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`),
   FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  constraint `unique_chart_products` UNIQUE(`chart_id`, `product_id`)
+  constraint `unique_chart_products` UNIQUE(`cart_id`, `product_id`)
 );
 
 -- Wishlist table
@@ -160,13 +156,12 @@ create table `payment` (
 	`payment_method_id` INT,
 	`name` varchar(100),
 	`number` varchar(50),
-	`image_id` INT unsigned,
+	`payment_proof_img` text,
 	`transaction_id` INT,
 	`status` varchar(50),
 	`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     foreign key (`payment_method_id`) references `payment_method` (`id`),
-	foreign key (`image_id`) references `images` (`id`),
 	foreign key (`transaction_id`) references `transactions` (`id`)
 );
 
