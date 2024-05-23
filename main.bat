@@ -1,6 +1,22 @@
 @echo off
 
 REM start icon
+
+echo Creating Database ...
+php .\create_database\database.php
+if errorlevel 1 (
+    echo failed to create database : php .\create_database\database.php
+    exit /b 1
+)
+
+echo insert 5 categories on table categories ...
+php .\categories\category.php
+if errorlevel 1 (
+    echo failed to insert 5 categories : php .\categories\category.php
+    exit /b 1
+)
+
+
 echo Running PHP scripts in icon directory...
 php .\icon\user\user.php
 if errorlevel 1 (
