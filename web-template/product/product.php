@@ -7,7 +7,7 @@ require_once __DIR__ . '../../../connection/GetConnection.php';
 $connection = getConnection();
 
 // ambil data json
-$json = file_get_contents(__DIR__ . "../../../data/icon.json");
+$json = file_get_contents(__DIR__ . "../../../data/webtemplate.json");
 // di decode dan juga menggunakna associative array
 $data = json_decode($json, true);
 
@@ -41,6 +41,8 @@ function getIdByName(string $name_seller) {
 }
 
 
+
+
 // buat sql
 $sql = "insert into products(title, image_product_url, seller_id, description, asset_product_url, price, category_id) values(?, ?, ?, ?, ?, ?, ?)";
 
@@ -53,7 +55,7 @@ for ($i = 0; $i < count($data); $i++) {
     $desc = $data[$i]['sellerText'];
     $asset_product_url = $data[$i]['linkSellerHref'];
     $price = $data[$i]['price'];
-    $category = 2;
+    $category = 1;
 
     // siapkan preparedStatement
     $preparedStatement = $connection->prepare($sql);
