@@ -13,7 +13,7 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username_unique` (`username`),
   UNIQUE KEY `user_email_unique` (`email`)
@@ -38,9 +38,9 @@ CREATE TABLE `user_details` (
   `user_id` INT unsigned NOT NULL,
   `bio` text DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `location` text,
+  `location` text null,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_details_user_id_unique` (`user_id`),
   CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)

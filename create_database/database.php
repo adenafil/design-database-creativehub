@@ -45,7 +45,7 @@ CREATE TABLE `user_details` (
   `user_id` INT unsigned NOT NULL,
   `bio` text DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `location` text,
+  `location` text null,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -182,7 +182,6 @@ create table `payment` (
 --   foreign key (`transaction_id`) references `transactions` (`id`),
 --   foreign key (`review_id`) references `reviews` (`id`)
 -- );
-
 
 ";
 

@@ -130,6 +130,16 @@ group by p.id
 
 
 select * from `user` u ;
-select * from products p ;
+select * from products p;
 select * from user_details ud ;
+select * from carts c ;
+
+select * from cart_products cp ;
+
+select * from payment_method pm ;
+select * from transactions t ;
+
+select * from payment p ;
+
+select * from reviews r ;
 

@@ -26,7 +26,7 @@ if errorlevel 1 (
 
 php .\icon\user_details\user_details.php
 if errorlevel 1 (
-    echo PHP script icon\user_details\productuser_details.php error brother...!
+    echo PHP script icon\user_details\user_details.php error brother...!
     exit /b 1
 )
 
@@ -50,7 +50,7 @@ if errorlevel 1 (
 
 php .\web-template\user_details\user_details.php
 if errorlevel 1 (
-    echo PHP script web-template\user_details\productuser_details.php error brother...!
+    echo PHP script web-template\user_details\user_details.php error brother...!
     exit /b 1
 )
 
@@ -74,7 +74,7 @@ if errorlevel 1 (
 
 php .\uikit\user_details\user_details.php
 if errorlevel 1 (
-    echo PHP script uikit\user_details\productuser_details.php error brother...!
+    echo PHP script uikit\user_details\user_details.php error brother...!
     exit /b 1
 )
 
@@ -87,6 +87,78 @@ if errorlevel 1 (
 
 REM end uikit
 
+
+REM start font
+echo Running PHP scripts in font directory...
+
+php .\font\user\user.php
+if errorlevel 1 (
+    echo PHP script font\user\user.php error brother...!
+    exit /b 1
+)
+
+php .\font\user_details\user_details.php
+if errorlevel 1 (
+    echo PHP script font\user_details\user_details.php error brother...!
+    exit /b 1
+)
+
+php .\font\product\product.php
+if errorlevel 1 (
+    echo PHP script font\product\product.php error brother...!
+    exit /b 1
+)
+
+
+REM end font
+
+REM start ebook
+echo Running PHP scripts in ebook directory...
+
+php .\ebook\user\user.php
+if errorlevel 1 (
+    echo PHP script ebook\user\user.php error brother...!
+    exit /b 1
+)
+
+php .\ebook\user_details\user_details.php
+if errorlevel 1 (
+    echo PHP script ebook\user_details\user_details.php error brother...!
+    exit /b 1
+)
+
+php .\ebook\product\product.php
+if errorlevel 1 (
+    echo PHP script ebook\product\product.php error brother...!
+    exit /b 1
+)
+
+
+REM end ebook
+
+
+REM start payment_method
+echo Running PHP scripts in payment_method directory...
+
+php .\payment_method\payment_method.php
+if errorlevel 1 (
+    echo PHP script payment_method\payment_method.php error brother...!
+    exit /b 1
+)
+
+REM end payment_method
+
+
+REM start mocking user
+echo Running PHP scripts in mocking directory...
+
+php .\mocking\user\user\user.php
+if errorlevel 1 (
+    echo PHP script mocking\user\user\user.php error brother...!
+    exit /b 1
+)
+
+REM end moking user
 
 
 echo All scripts executed successfully!
